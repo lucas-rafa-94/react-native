@@ -74,7 +74,7 @@ const App = () => {
       <View style={conteudo}>
           <Image source={require('./img/logo.png')}></Image>
           <TouchableOpacity style={estiloBotao} onPress={funcFrase}>
-              <Text style={estiloTextoBotao}>Clique aqui</Text>
+              <Text style={estiloTextoBotao}>Frase do dia</Text>
           </TouchableOpacity>
       </View>
       <View style={rodape}>
