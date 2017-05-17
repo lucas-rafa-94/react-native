@@ -8,15 +8,37 @@ import {
   Image
 } from 'react-native';
 
+import Topo from './src/components/topo.js'
+
 const Estilos ={
   estiloImagemTopo:{
-    width:200
+
+  },
+  buttons:{
+    width: 90
+  },
+  conteudo:{
+    marginTop:10,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  palco:{
+    alignItems:'center',
+    marginTop: 20
+  },
+  textVencedor:{
+    height: 40,
+    color: 'red',
+    fontSize: 20
+
+  },
+  resultadoJogo:{
+    alignItems:'center',
+    marginBottom: 20
   }
 }
 
 class app3 extends Component{
-
-
     constructor(props){
       super(props);
 
@@ -39,7 +61,7 @@ class app3 extends Component{
 
       if(escolhaComputador == 'pedra'){
         if(escolha == 'pedra'){
-          resultado = 'empate';
+          resultado = 'Empate!!';
         }else if (escolha == 'papel') {
           resultado = 'Usuário Venceu!!';
         }else {
@@ -51,46 +73,81 @@ class app3 extends Component{
         }else if (escolha == 'papel') {
           resultado = 'Computador venceu!!';
         }else {
-          resultado = 'empate';
+          resultado = 'Empate!!';
         }
       }else if (escolhaComputador == 'papel') {
         if(escolha == 'pedra'){
           resultado = 'Computador venceu!!';
         }else if (escolha == 'papel') {
-          resultado = 'empate';
+          resultado = 'Empate!!';
         }else {
           resultado = 'Usuário Venceu!!';
         }
       }
 
       this.setState({'escolhaUsuario' : escolha, 'escolhaComputador': escolhaComputador, 'resultado': resultado})
-    }
+    };
 
     render(){
+
+    const {estiloImagemTopo, textVencedor, palco, conteudo, buttons} = Estilos;
+
     return(
       <View>
           <Topo></Topo>
-          <View></View>
-          <View></View>
-      <Text> Escolha usuario: {this.state.escolhaUsuario} </Text>
-      <Text> Escolha computador: {this.state.escolhaComputador}  </Text>
-      <Text> Vencedor: {this.state.resultado}  </Text>
-      <Button title='Pedra' onPress={ () => this.trocaEscolha('pedra')}  />
-      <Button title='Papel' onPress={() => this.trocaEscolha('papel')}/>
-      <Button title='Tesoura' onPress={() => this.trocaEscolha('tesoura')}/>
+          <View style={conteudo}>
+              <View style={buttons}>
+                  <Button  title='Pedra' onPress={ () => this.trocaEscolha('pedra')}  />
+              </View>
+              <View style={buttons}>
+                  <Button title='Papel' onPress={() => this.trocaEscolha('papel')}/>
+              </View>
+              <View style={buttons}>
+                  <Button title='Tesoura' onPress={() => this.trocaEscolha('tesoura')}/>
+              </View>
+          </View>
+          <View style={palco}>
+
+          <Text style={textVencedor}> {this.state.resultado} </Text>
+
+          <Icone escolha={this.state.escolhaComputador} usuario={'Computador'}></Icone>
+          <Icone escolha={this.state.escolhaUsuario} usuario={'Usuario'}></Icone>
+
+          </View>
+
       </View>
     );
   };
 };
 
-class Topo extends Component {
+class Icone extends Component{
   render(){
-    const {estiloImagemTopo} = Estilos;
-    return(
-      <View>
-          <Image style={estiloImagemTopo} source={require('./img/jokenpo.png')} />
+    const {resultadoJogo} = Estilos;
+    if(this.props.escolha == "pedra"){
+      return(
+          <View style={resultadoJogo}>
+            <Text>{this.props.usuario}</Text>
+            <Image source={require('./img/pedra.png')} />
+          </View>
+        );
+      }else if (this.props.escolha == "tesoura") {
+        return(
+        <View style={resultadoJogo}>
+          <Text>{this.props.usuario}</Text>
+          <Image source={require('./img/tesoura.png')} />
+        </View>
+      );
+    }else if (this.props.escolha == "papel") {
+      return(
+      <View style={resultadoJogo}>
+        <Text>{this.props.usuario}</Text>
+        <Image source={require('./img/papel.png')} />
       </View>
-    )
+    );
+  }else {
+    return false;
+  }
+
   }
 }
 
